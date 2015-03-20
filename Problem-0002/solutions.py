@@ -10,20 +10,61 @@ __problem_description__ = "Each new term in the Fibonacci sequence is generated 
 import timeit
 
 
+def fib(num):
+    if num <= 1:
+        return 1
+    else:
+        return fib(num - 1) + fib(num - 2)
+
+
+def fast_fib():
+    memory = [1, 1]
+    term = 2
+    term_value = 0
+    while term_value <= 4000000:
+        term_value = memory[term - 1] + memory[term - 2]
+        if term_value <= 4000000:
+            memory.append(term_value)
+        term += 1
+
+    return memory
+
+
 class Solution():
 
     @staticmethod
     def solution1():
-        pass
+        value = 0
+        term_num = 2
+        even_sum = 0
+        while value <= 4000000:
+            value = fib(term_num)
+            if not value & 1 and value <= 4000000:
+                even_sum += value
+            term_num += 1
+
+        return even_sum
+
+    @staticmethod
+    def solution2():
+        even_sum = 0
+        fib_under_4mm = fast_fib()
+        for value in fib_under_4mm:
+            if not value & 1:
+                even_sum += value
+
+        return even_sum
 
     @staticmethod
     def time_solutions():
         setup = 'from __main__ import Solution'
         print('Solution 1:', timeit.timeit('Solution.solution1()', setup=setup, number=1))
+        print('Solution 2:', timeit.timeit('Solution.solution2()', setup=setup, number=1))
 
 
 if __name__ == '__main__':
     s = Solution()
     print(s.solution1())
+    print(s.solution2())
     s.time_solutions()
 
