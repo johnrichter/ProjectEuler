@@ -15,15 +15,15 @@ class Solution():
         pass
 
     @staticmethod
-    def time_solutions():
+    def time_solutions(runs):
         setup = 'from __main__ import Solution'
-        print('Solution 1:', timeit.timeit('Solution.solution1()', setup=setup, number=1))
+        print('Solution 1:', timeit.timeit('Solution.solution1()', setup=setup, number=runs))
 
 
 if __name__ == '__main__':
     s = Solution()
     print(s.solution1())
-    s.time_solutions()
+    s.time_solutions(1)
 
 """
 
@@ -98,7 +98,7 @@ def create_problem(number):
 if __name__ == '__main__':
     from requests.exceptions import HTTPError
 
-    for problem_num in range(1, 505):  # 505
+    for problem_num in range(1, 508):
         try:
             create_problem(problem_num)
         except ValueError as e:
